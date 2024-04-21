@@ -1,0 +1,26 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    flex-shrink: 0; /* Prevents the header from shrinking */
+}
+
+main {
+    flex: 1; /* Takes up the remaining space */
+    display: flex; /* Allows for centering content */
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    padding: 1rem; /* Adds some padding around the content */
+}
+
+footer {
+    flex-shrink: 0; /* Prevents the footer from shrinking */
+}

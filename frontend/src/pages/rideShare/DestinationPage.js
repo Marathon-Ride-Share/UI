@@ -97,9 +97,9 @@ const DestinationPage = () => {
                         <>
                             <div ref={mapContainer} className="w-100" style={{height: '300px', marginTop: '20px'}}/>
                             <Button className="mt-3"
-                                    onClick={() => navigate('/summary', { state: { originLocation, destinationLocation } })}
+                                    onClick={() => navigate('/create-ride', { state: { originLocation, destinationLocation } })}
                                     disabled={!coords}>
-                                Finish
+                                Next
                             </Button>
                         </>
                     )}

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 // import Header from "./components/common/Header";
 // import Footer from "./components/common/Footer";
 import LoginPage from "./pages/LoginPage";
-// import RegisterPage from "./pages/RegisterPage";
+import RegisterPage from "./pages/RegisterPage";
 import WelcomePage from "./pages/WelcomePage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css"; // Assuming you have some global styles
@@ -22,7 +22,9 @@ function App() {
             {/*<Route path="/register" element={<RegisterPage />} />*/}
             <Route path="/welcome" element={<WelcomePage />} />
             {/* Add other routes for other pages as needed */}
-          </Routes>
+            <Route path="/register" element={<RegisterPage />} />
+            {/* Add other routes for other pages as needed */}
+            </Routes>
         </div>
       </Router>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../css/LoginPage.css'; // Ensure this path correctly points to your CSS file
+import '../css/LoginPage.css'; 
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
@@ -10,7 +10,7 @@ const LoginPage = () => {
     const handleLogin = async (event) => {
         event.preventDefault();
         // Authentication logic here
-        navigate('/welcome'); // Navigate after login
+        navigate('/welcome'); 
     };
 
     return (

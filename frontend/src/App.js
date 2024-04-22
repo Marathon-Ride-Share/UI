@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import WelcomePage from "./pages/WelcomePage";
-import RideSharePage from "./pages/rideShare/RideSharePage";
+import RideShareLandingPage from "./pages/rideShare/RideShareLandingPage";
+import OriginPage from "./pages/rideShare/OriginPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./App.css"; // Assuming you have some global styles
+import "./App.css";
 
 function App() {
   const isAuthenticated = () => {
@@ -23,9 +24,9 @@ function App() {
             {/* Add other routes for other pages as needed */}
             <Route path="/register" element={<RegisterPage />} />
             {/* Add other routes for other pages as needed */}
-              <Route path="/ride-share" element={<RideSharePage />} />
-              {/*<Route path="/register" element={<RegisterPage />} />*/}
-              {/* Add other routes for other pages as needed */}
+              <Route path="/ride-share" element={<RideShareLandingPage />} />
+              <Route path="/origin" element={<OriginPage />} />
+                {/*<Route path="/destination" element={<DestinationPage />} />*/}
           </Routes>
         </div>
       </Router>

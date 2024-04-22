@@ -33,7 +33,7 @@ const LoginPage = () => {
                         <input
                             type="password"
                             className="form-control"
-                            id="password"
+                            id="passwo`rd"
                             value={password}
                             onChange={e => setPassword(e.target.value)}
                         />

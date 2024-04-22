@@ -3,7 +3,7 @@ import Header from '../../components/common/Header';
 import Footer from '../../components/common/Footer';
 import { useNavigate } from 'react-router-dom';
 
-const RideSharePage = () => {
+const RideShareLandingPage = () => {
     const navigate = useNavigate();
 
     // Retrieve isDriver from localStorage and parse it to a boolean
@@ -19,7 +19,7 @@ const RideSharePage = () => {
                         // isDriver &&
                         (
                         <button
-                            onClick={() => navigate('/share-ride')}
+                            onClick={() => navigate('/origin')}
                             className="btn btn-primary btn-lg mb-2 w-100" // w-100 for full width, btn-lg for larger size
                         >
                             Share Your Ride
@@ -44,4 +44,4 @@ const RideSharePage = () => {
     );
 };
 
-export default RideSharePage;
+export default RideShareLandingPage;

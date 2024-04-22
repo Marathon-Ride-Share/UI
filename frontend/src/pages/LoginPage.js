@@ -9,9 +9,33 @@ const LoginPage = () => {
 
     const handleLogin = async (event) => {
         event.preventDefault();
-        // Authentication logic here
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username,
+                    password,
+                }),
+            });
+
+            if (!res.ok) {
+                throw await res.json(); // Assumes server sends an error object
+            }
+
+            const data = await res.json();
+
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('username', data.username);
+            localStorage.setItem('expiresIn', data.expiresIn);
+            localStorage.setItem()
         navigate('/welcome'); 
-    };
+        } catch (e) {
+            console.log(e);
+        };
+    }
 
     return (
         <div className="vh-100 d-flex justify-content-center align-items-center">

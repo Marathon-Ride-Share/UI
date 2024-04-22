@@ -1,10 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-// import Header from "./components/common/Header";
-// import Footer from "./components/common/Footer";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import WelcomePage from "./pages/WelcomePage";
+import RideSharePage from "./pages/rideShare/RideSharePage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css"; // Assuming you have some global styles
 
@@ -24,7 +23,10 @@ function App() {
             {/* Add other routes for other pages as needed */}
             <Route path="/register" element={<RegisterPage />} />
             {/* Add other routes for other pages as needed */}
-            </Routes>
+              <Route path="/ride-share" element={<RideSharePage />} />
+              {/*<Route path="/register" element={<RegisterPage />} />*/}
+              {/* Add other routes for other pages as needed */}
+          </Routes>
         </div>
       </Router>
   );

@@ -27,10 +27,9 @@ const LoginPage = () => {
 
             const data = await res.json();
 
-            localStorage.setItem('token', data.token);
+            localStorage.setItem('token', data.jwt);
             localStorage.setItem('username', data.username);
-            localStorage.setItem('expiresIn', data.expiresIn);
-            localStorage.setItem()
+            localStorage.setItem('isDriver', data.isDriver);
         navigate('/welcome'); 
         } catch (e) {
             console.log(e);

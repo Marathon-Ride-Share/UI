@@ -5,15 +5,24 @@ import '../css/ChatPageStyles.css';
 function ChatPage() {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
-    const [chatType, setChatType] = useState('group');
-    const [recipient, setRecipient] = useState('');
+    const [username, setUsername] = useState('default');
     const ws = useRef(null);
 
-    const handleMessageReceived = useCallback((data) => {
-        if (!messages.some(msg => msg.timestamp === data.timestamp && msg.message === data.message)) {
-            setMessages(prev => [...prev, {...data, sender: 'default'}]);
+    useEffect(() => {
+        const savedUsername = localStorage.getItem('username');
+        if (savedUsername) {
+            setUsername(savedUsername);
         }
-    }, [messages]);
+    }, []);
+
+    const handleMessageReceived = useCallback((data) => {
+        const actualData = data.message;
+        if (!messages.some(msg => msg.timestamp === actualData.timestamp && msg.message === actualData.message)) {
+            setMessages(prev => [...prev, {...actualData, sender: actualData.sender || username}]);
+        }
+    }, [messages, username]);
+
+
 
     useEffect(() => {
         const websocketUrl = `ws://localhost:8083/chat`;
@@ -28,8 +37,15 @@ function ChatPage() {
 
     const handleSendMessage = () => {
         if (newMessage.trim() !== "" && ws.current && ws.current.readyState === WebSocket.OPEN) {
-            sendMessage(ws.current, newMessage, chatType === 'private' ? recipient : undefined);
+            const messageToSend = {
+                message: newMessage,
+                timestamp: Date.now(),
+                sender: username,
+                chatType: 'group', // 假设当前只有群聊功能，简化代码
+            };
+            sendMessage(ws.current, messageToSend);
             setNewMessage('');
+            setMessages(prevMessages => [...prevMessages, messageToSend]);
         }
     };
 

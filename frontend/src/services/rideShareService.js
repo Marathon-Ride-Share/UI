@@ -38,6 +38,25 @@ const findRidesNearby = async (searchRequest) => {
   return await response.json();
 };
 
+const bookRide = async (bookRideRequest) => {
+  console.log("booking ride with " + bookRideRequest);
+  const response = await fetch(`${RideShareURL}/book`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ bookRideRequest }),
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `HTTP error! status: ${response.status} message: ${response.statusText}`
+    );
+  }
+
+  return await response.json();
+};
+
 const startRide = async (rideId, startTime) => {
   console.log("Starting ride with ID:", rideId, "at time:", startTime);
   const response = await fetch(`${RideShareURL}/${rideId}/start`, {
@@ -57,4 +76,4 @@ const startRide = async (rideId, startTime) => {
   return await response.json();
 };
 
-export { createRide, findRidesNearby, startRide };
+export { createRide, findRidesNearby, startRide, bookRide };

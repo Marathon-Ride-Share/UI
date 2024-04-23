@@ -9,8 +9,13 @@ import DatePicker from "react-datepicker";
 import { SearchRidesRequest } from "../../models/RideShareModels";
 import { Modal, ListGroup } from "react-bootstrap";
 import OfferEntry from "../../components/common/OfferEntry";
-import rides from "../../services/mockData";
-const RidesModal = ({ showModal, setShowModal, navigateToRide }) => {
+const RidesModal = ({
+  showModal,
+  setShowModal,
+  navigateToRide,
+  rides,
+  locationDetails,
+}) => {
   return (
     <Modal
       show={showModal}
@@ -28,6 +33,7 @@ const RidesModal = ({ showModal, setShowModal, navigateToRide }) => {
               <OfferEntry
                 key={ride.rideId}
                 ride={ride}
+                location={locationDetails}
                 className="ride-entry-card"
               />
             ))}
@@ -124,6 +130,7 @@ const PickupLocationPage = () => {
       const filteredRides = response.rides.filter(
         (ride) => ride.driverInfo.driverName !== userId
       );
+      console.log(filteredRides);
       setRides(filteredRides);
       setShowModal(true);
       // create a scrollable popup that displays all the rides and once user selects one ride, navigate to the ride details page and allow them to book it
@@ -143,6 +150,7 @@ const PickupLocationPage = () => {
             rides={rides}
             showModal={showModal}
             setShowModal={setShowModal}
+            locationDetails={locationDetails}
             navigateToRide={(rideId) => {
               // navigation logic to ride details page
               console.log("Navigate to ride with ID:", rideId);

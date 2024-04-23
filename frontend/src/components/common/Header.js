@@ -20,7 +20,7 @@ const Header = () => {
 
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={() => navigate('/ride-share')}>Ride Share</Dropdown.Item>
-                        <Dropdown.Item onClick={() => navigate('/ride-history-review')}>Ride History and Review</Dropdown.Item>
+                        <Dropdown.Item onClick={() => navigate('/ride-history')}>Ride History</Dropdown.Item>
                         <Dropdown.Item onClick={() => navigate('/user-profile')}>User Profile</Dropdown.Item>
                         <Dropdown.Item onClick={() => navigate('/inride-chat')}>InRide Chat</Dropdown.Item>
                         <Dropdown.Item onClick={() => navigate('/payment-info')}>Payment Info</Dropdown.Item>

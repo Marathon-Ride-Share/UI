@@ -1,0 +1,73 @@
+.ride-card {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    border: 1px solid #e0e0e0;
+}
+.map-container {
+    width: 90%;
+    height: 55%;
+    /* margin-top: 10px; */
+}
+
+.ride-info{
+    width: 90%;
+    height: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: space-around;
+}
+.address {
+    width: 100%;
+    height: 33%;
+    font-size: 18px;
+    font-weight: bolder;
+    color: #333;
+}
+.date-time{
+    width: 100%;
+    height: 33%;
+    font-size: 16px;
+    color: #333;
+}
+.price{
+    width: 100%;
+    height: 33%;
+    font-size: 16px;
+    color: #333;
+}
+
+.review-btn{
+    width: 120px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(235, 233, 233); /* Changed from gray to white */
+    border: none; /* Removed top border to match the second image */
+    border-radius: 20px; /* Increased border-radius for a more rounded look */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* Adjusted box-shadow for subtlety */
+    font-size: 16px; /* Adjusted font size for visibility */
+    color: #333; /* Text color changed to dark */
+    gap: 8px; /* Added gap between icon and text if needed */
+    padding: 0 12px; /* Added horizontal padding for a wider button */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+    transition: background-color 0.3s; /* Smooth background color transition on hover */
+}
+
+.rate-btn:hover {
+    background-color: #f0f0f0; /* Light grey background on hover */
+}
+
+.rate-btn:focus {
+    outline: none; /* Removes the default outline on focus for cleaner appearance */
+}
+
+
+/* Add responsive adjustments as needed */

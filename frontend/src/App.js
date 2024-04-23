@@ -9,6 +9,7 @@ import DestinationPage from "./pages/rideShare/DestinationPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
 import CreateRidePage from "./pages/rideShare/CreateRidePage";
+import RideHistoryPage from "./pages/RideHistoryPage"; // Assuming you have some global styles
 import ChatPage from "./pages/ChatPage";
 
 function App() {
@@ -19,7 +20,6 @@ function App() {
 
   return (
       <Router>
-        <div className="container mt-5">
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/welcome" element={<WelcomePage />} />
@@ -29,9 +29,9 @@ function App() {
             <Route path="/origin" element={<OriginPage />} />
             <Route path="/destination" element={<DestinationPage />} />
             <Route path="/create-ride" element={<CreateRidePage />} />
-            {/* Add other routes for other pages as needed */}
+            <Route path="/ride-history" element={<RideHistoryPage />} />
+
           </Routes>
-        </div>
       </Router>
   );
 }

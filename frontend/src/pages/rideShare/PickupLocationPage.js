@@ -70,11 +70,15 @@ const PickupLocationPage = () => {
 
     const handleGetRidesNearby = async () => {
         try {
-            const searchRequest  = new SearchRidesRequest(pickupLocation, pickupTime.toISOString());
+            const searchRequest  = new SearchRidesRequest(locationDetails, pickupTime);
             const response = await findRidesNearby(searchRequest);
 
-            const userId = localStorage.getItem('userId');
+            // console.log(response);
+
+            const userId = localStorage.getItem('username');
             const filteredRides = response.rides.filter(ride => ride.driverInfo.driverName !== userId);
+
+            console.log(filteredRides);
 
             // create a scrollable popup that displays all the rides and once user selects one ride, navigate to the ride details page and allow them to book it
         } catch (error) {

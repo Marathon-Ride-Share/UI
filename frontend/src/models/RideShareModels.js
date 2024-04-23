@@ -10,9 +10,9 @@ class CreateRideRequest {
 }
 
 class SearchRidesRequest {
-    constructor(location, dateTime) {
+    constructor(location, datetime) {
         this.location = location;
-        this.dateTime = dateTime;
+        this.datetime = datetime;
     }
 }
 

@@ -19,7 +19,7 @@ const createRide = async (rideDetails) => {
 
 const findRidesNearby = async (searchRequest) => {
     console.log('searchRequest:', searchRequest);
-    const response = await fetch(`${RideShareURL}search`, {
+    const response = await fetch(`${RideShareURL}/search`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

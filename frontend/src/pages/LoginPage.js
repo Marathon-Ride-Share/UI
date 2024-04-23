@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../css/LoginPage.css'; 
+import '../css/LoginPage.css';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
@@ -10,7 +10,7 @@ const LoginPage = () => {
     const handleLogin = async (event) => {
         event.preventDefault();
         try {
-            const res = await fetch('http://localhost:8082/api/users/login', {
+            const res = await fetch('http://localhost:8090/users/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,10 +27,20 @@ const LoginPage = () => {
 
             const data = await res.json();
 
-            localStorage.setItem('token', data.jwt);
+            const token = res.headers.get('Authorization');
+            // Access headers from response
+            const headers = res.headers;
+
+            // Iterate over headers
+            headers.forEach((value, name) => {
+                console.log(`${name}: ${value}`);
+            });
+
+            // localStorage.setItem('token', token);
             localStorage.setItem('username', data.username);
+
             localStorage.setItem('isDriver', data.isDriver);
-            navigate('/welcome'); 
+            navigate('/welcome');
         } catch (e) {
             console.log(e);
         };
@@ -62,7 +72,12 @@ const LoginPage = () => {
                         />
                     </div>
                     <div className="mb-3 d-grid gap-2">
-                        <button type="submit" className="btn btn-primary">Log In</button>
+                        <button
+                            type="button" // 更改为button以防止默认的表单提交行为
+                            className="btn btn-primary"
+                            onClick={handleLogin} // 直接设置onClick事件处理器
+                        >Log In
+                        </button>
                     </div>
                     <div className="d-grid gap-2">
                         <button type="button" className="btn btn-outline-secondary" onClick={() => navigate('/register')}>

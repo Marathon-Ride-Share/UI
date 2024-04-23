@@ -9,21 +9,13 @@ import { BookRideRequest } from "../../models/RideShareModels";
 const handleBookRide = async (rideId, location) => {
   try {
     console.log("booking ride");
-    const searchRequest = new BookRideRequest(
+    const bookRideRequest = new BookRideRequest(
       localStorage.getItem("username"),
       rideId,
       location
     );
-    const response = await findRidesNearby(searchRequest);
-
-    const userId = localStorage.getItem("userId");
-    const filteredRides = response.rides.filter(
-      (ride) => ride.driverInfo.driverName !== userId
-    );
-    console.log(filteredRides);
-    setRides(filteredRides);
-    setShowModal(true);
-    // create a scrollable popup that displays all the rides and once user selects one ride, navigate to the ride details page and allow them to book it
+    const response = await bookRide(bookRideRequest);
+    console.log(response);
   } catch (error) {
     console.error("Failed to fetch rides:", error);
     // Show an error message to the user
@@ -41,7 +33,7 @@ const OfferEntry = ({ ride, location }) => {
         <div className="address-entry">{ride.destination.locationName}</div>
         <div className="price-entry">${ride.price}</div>
       </div>
-      <button>Book</button>
+        <button onClick={() => handleBookRide(ride.id, location)}>Book</button>
     </div>
   );
 };

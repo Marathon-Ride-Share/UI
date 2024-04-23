@@ -32,7 +32,7 @@ const CreateRidePage = () => {
       const response = await createRide(rideDetails);
       console.log(response);
 
-      navigate("/my-rides", { state: { rideDetails: response.ride } });
+      navigate("/ride-history", { state: { rideDetails: response.ride } });
     } catch (error) {
       // Show an error message to the user
       alert("Failed to create ride: " + error);

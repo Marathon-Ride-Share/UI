@@ -38,4 +38,23 @@ const findRidesNearby = async (searchRequest) => {
   return await response.json();
 };
 
-export { createRide, findRidesNearby };
+const startRide = async (rideId, startTime) => {
+  console.log("Starting ride with ID:", rideId, "at time:", startTime);
+  const response = await fetch(`${RideShareURL}/${rideId}/start`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ startTime }),
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `HTTP error! status: ${response.status} message: ${response.statusText}`
+    );
+  }
+
+  return await response.json();
+};
+
+export { createRide, findRidesNearby, startRide };

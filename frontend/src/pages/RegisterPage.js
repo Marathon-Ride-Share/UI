@@ -19,9 +19,19 @@ const RegistrationForm = () => {
     setFormValues(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Process formValues here, like sending to an API
+    const res = await fetch('http://localhost:8082/api/users/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formValues),
+            });
+
+            if (!res.ok) {
+                throw await res.json(); // Assumes server sends an error object
+            }
     navigate('/login'); 
     console.log(formValues);
   };

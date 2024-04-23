@@ -10,7 +10,7 @@ const LoginPage = () => {
     const handleLogin = async (event) => {
         event.preventDefault();
         try {
-            const res = await fetch('/api/auth/login', {
+            const res = await fetch('http://localhost:8082/api/users/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ const LoginPage = () => {
             localStorage.setItem('token', data.jwt);
             localStorage.setItem('username', data.username);
             localStorage.setItem('isDriver', data.isDriver);
-        navigate('/welcome'); 
+            navigate('/welcome'); 
         } catch (e) {
             console.log(e);
         };

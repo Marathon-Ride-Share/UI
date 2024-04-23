@@ -14,6 +14,7 @@ import DestinationPage from "./pages/rideShare/DestinationPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import CreateRidePage from "./pages/rideShare/CreateRidePage";
+import MyRidePage from "./pages/MyRidePage";
 
 import RideHistoryPage from "./pages/RideHistoryPage"; // Assuming you have some global styles
 import ChatPage from "./pages/ChatPage";
@@ -39,6 +40,8 @@ function App() {
         <Route path="/create-ride" element={<CreateRidePage />} />
         <Route path="/ride-history" element={<RideHistoryPage />} />
         <Route path="/pickup" element={<PickupLocationPage />} />
+        <Route path="/my-rides" element={<MyRidePage />} />
+
         {/*<Route path="/book-ride" element={<BookRidePage />} />*/}
         {/* Add other routes for other pages as needed */}
       </Routes>

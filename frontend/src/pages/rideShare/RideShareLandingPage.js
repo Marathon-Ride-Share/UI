@@ -26,7 +26,7 @@ const RideShareLandingPage = () => {
                         </button>
                     )}
                     <button
-                        onClick={() => navigate('/browse-rides')}
+                        onClick={() => navigate('/pickup')}
                         className="btn btn-secondary btn-lg mb-2 w-100" // w-100 for full width, btn-lg for larger size
                     >
                         Browse Rides

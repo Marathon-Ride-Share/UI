@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import Footer from "../../components/common/Footer";
 import Header from "../../components/common/Header";
-import CreateRideRequest from "../../models/CreateRideRequest";
+import { CreateRideRequest } from "../../models/RideShareModels";
 import {createRide} from "../../services/rideShareService";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -31,9 +31,13 @@ const CreateRidePage = () => {
         try {
             const response = await createRide(rideDetails);
             console.log(response);
-            navigate('/my-rides');
+
+            navigate('/my-rides', { state: { rideDetails: response.ride } });
         } catch (error) {
+            // Show an error message to the user
+            alert('Failed to create ride: ' + error);
             console.error('Failed to create ride:', error);
+            navigate('/ride-share')
         }
     };
 

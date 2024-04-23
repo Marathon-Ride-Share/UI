@@ -1,5 +1,4 @@
-// CreateRideRequestModel.js
-export default class CreateRideRequest {
+class CreateRideRequest {
     constructor(userName, origin, destination, startTime, price, availableSeats) {
         this.userName = userName;
         this.origin = origin;
@@ -9,3 +8,12 @@ export default class CreateRideRequest {
         this.availableSeats = availableSeats;
     }
 }
+
+class SearchRidesRequest {
+    constructor(location, dateTime) {
+        this.location = location;
+        this.dateTime = dateTime;
+    }
+}
+
+export { CreateRideRequest, SearchRidesRequest };

@@ -1,21 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import mapboxgl from 'mapbox-gl';
 import { Button, Form, Container, Row, Col, Alert } from 'react-bootstrap';
 import Header from "../../components/common/Header";
 import Footer from "../../components/common/Footer";
+import { findRidesNearby } from "../../services/rideShareService";
+import DatePicker from 'react-datepicker';
+import {SearchRidesRequest} from "../../models/RideShareModels";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGVpZGlpaSIsImEiOiJjbHVpcWY1dGgwNzZpMmpwNW40ZnkydGdhIn0.C24gOW_hYKPR8m8LWXqDsQ';
-const DestinationPage = () => {
-    const [destination, setDestination] = useState('');
+
+const PickupLocationPage = () => {
+    const [pickupLocation, setPickupLocation] = useState('');
     const [coords, setCoords] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const [pickupTime, setPickupTime] = useState(new Date());
     const navigate = useNavigate();
-    const location = useLocation();
-    const originLocation = location.state.originLocation;
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [destinationLocation, setDestinationLocation] = useState({
+    const [locationDetails, setLocationDetails] = useState({
         latitude: 0,
         longitude: 0,
         locationName: ''
@@ -23,6 +26,7 @@ const DestinationPage = () => {
 
     useEffect(() => {
         if (!coords) return;
+        if (map.current) return; // Prevent multiple initializations
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox/streets-v11',
@@ -34,25 +38,26 @@ const DestinationPage = () => {
             .addTo(map.current);
     }, [coords]);
 
-    const handleAddDestination = () => {
-        if (!destination) {
-            setErrorMessage("Please enter a location name.");
+    const handleAddPickupLocation = () => {
+        if (!pickupLocation) {
+            setErrorMessage("Please enter a pickup location.");
             return;
         }
-        const geocoderUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(destination)}.json?access_token=${mapboxgl.accessToken}`;
+        const geocoderUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(pickupLocation)}.json?access_token=${mapboxgl.accessToken}`;
         fetch(geocoderUrl)
             .then(response => response.json())
             .then(data => {
                 if (data.features.length > 0) {
                     const newCoords = { lng: data.features[0].center[0], lat: data.features[0].center[1] };
                     setCoords(newCoords);
-                    destinationLocation.latitude = newCoords.lat;
-                    destinationLocation.longitude = newCoords.lng;
-                    destinationLocation.locationName = destination;
-                    console.log(originLocation, destinationLocation)
+                    setLocationDetails({
+                        latitude: newCoords.lat,
+                        longitude: newCoords.lng,
+                        locationName: pickupLocation
+                    });
                     setErrorMessage('');
                 } else {
-                    setErrorMessage("Enter a valid location!");
+                    setErrorMessage("Enter a valid pickup location!");
                     setCoords(null);
                 }
             })
@@ -63,6 +68,22 @@ const DestinationPage = () => {
             });
     };
 
+    const handleGetRidesNearby = async () => {
+        try {
+            const searchRequest  = new SearchRidesRequest(pickupLocation, pickupTime.toISOString());
+            const response = await findRidesNearby(searchRequest);
+
+            const userId = localStorage.getItem('userId');
+            const filteredRides = response.rides.filter(ride => ride.driverInfo.driverName !== userId);
+
+            // create a scrollable popup that displays all the rides and once user selects one ride, navigate to the ride details page and allow them to book it
+        } catch (error) {
+            console.error('Failed to fetch rides:', error);
+            // Show an error message to the user
+            alert('Failed to fetch rides: ' + error);
+        }
+    };
+
     return (
         <div className="d-flex flex-column min-vh-100">
             <Header/>
@@ -70,24 +91,40 @@ const DestinationPage = () => {
                 <Container>
                     <Row className="align-items-center mb-2">
                         <Col xs={9} md={10} lg={11}>
-                            <h1>Enter Destination</h1>
+                            <h1>Enter Pickup Location</h1>
                         </Col>
                         <Col xs={3} md={2} lg={1} className="text-end">
                             <Button variant="secondary" onClick={() => navigate('/ride-share')}>Cancel</Button>
                         </Col>
                     </Row>
                     <Form>
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm="4">Pickup Time:</Form.Label>
+                            <Col sm="8">
+                                <DatePicker
+                                    selected={pickupTime}
+                                    onChange={date => setPickupTime(date)}
+                                    showTimeSelect
+                                    timeFormat="HH:mm"
+                                    timeIntervals={15}
+                                    timeCaption="time"
+                                    dateFormat="MMMM d, yyyy h:mm aa"
+                                    wrapperClassName="datePicker"
+                                    className="form-control"
+                                />
+                            </Col>
+                        </Form.Group>
                         <Row className="mb-4">
                             <Col sm={9} className="mb-4">
                                 <Form.Control
                                     type="text"
-                                    value={destination}
-                                    onChange={(e) => setDestination(e.target.value)}
-                                    placeholder="Enter destination location"
+                                    value={pickupLocation}
+                                    onChange={(e) => setPickupLocation(e.target.value)}
+                                    placeholder="Enter pickup location"
                                 />
                             </Col>
                             <Col sm={3} className="d-flex justify-content-center">
-                                <Button onClick={handleAddDestination} className="mx-2">Add Destination</Button>
+                                <Button onClick={handleAddPickupLocation} className="mx-2">Add Location</Button>
                             </Col>
                         </Row>
                     </Form>
@@ -96,9 +133,9 @@ const DestinationPage = () => {
                         <>
                             <div ref={mapContainer} className="w-100" style={{height: '300px', marginTop: '20px'}}/>
                             <Button className="mt-3"
-                                    onClick={() => navigate('/create-ride', { state: { originLocation, destinationLocation } })}
+                                    onClick={handleGetRidesNearby}
                                     disabled={!coords}>
-                                Next
+                                Get Rides Nearby
                             </Button>
                         </>
                     )}
@@ -109,4 +146,4 @@ const DestinationPage = () => {
     );
 };
 
-export default DestinationPage;
+export default PickupLocationPage;

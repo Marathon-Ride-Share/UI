@@ -38,6 +38,7 @@ const RideDetail = () => {
             fetch(directionsRequest)
                 .then(response => response.json())
                 .then(data => {
+                    console.log("他们的 什么东西",data.routes[0].geometry)
                     const route = data.routes[0].geometry;
                     map.current.addSource('route', {
                         type: 'geojson',

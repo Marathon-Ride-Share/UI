@@ -9,6 +9,7 @@ import DestinationPage from "./pages/rideShare/DestinationPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
 import CreateRidePage from "./pages/rideShare/CreateRidePage";
+import ChatPage from "./pages/ChatPage";
 
 function App() {
   const isAuthenticated = () => {
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" element={<LoginPage />} />
             <Route path="/welcome" element={<WelcomePage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/inride-chat" element={<ChatPage />} />
             <Route path="/ride-share" element={<RideShareLandingPage />} />
             <Route path="/origin" element={<OriginPage />} />
             <Route path="/destination" element={<DestinationPage />} />

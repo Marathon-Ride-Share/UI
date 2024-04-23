@@ -16,7 +16,7 @@ const RideShareLandingPage = () => {
                 <div className="w-100" style={{ maxWidth: '320px' }}> {/* Constrain the width for better aesthetics */}
                     {/* Render the "Share Your Ride" button if isDriver is true */}
                     {
-                        // isDriver &&
+                        isDriver &&
                         (
                         <button
                             onClick={() => navigate('/origin')}

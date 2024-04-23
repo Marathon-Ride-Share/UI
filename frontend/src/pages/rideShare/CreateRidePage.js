@@ -19,8 +19,8 @@ const CreateRidePage = () => {
 
     const handleCreateRideSubmit = async () => {
         const rideDetails = new CreateRideRequest(
-            // localStorage.getItem("userId"),
-            'lakshmeesravya', // for temporary testing
+            localStorage.getItem("username"),
+            // 'lakshmeesravya', // for temporary testing
             originLocation,
             destinationLocation,
             startTime.toISOString(),

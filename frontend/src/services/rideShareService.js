@@ -1,4 +1,4 @@
-const RideShareURL = 'http://localhost:8090/api/rides/';
+const RideShareURL = 'http://localhost:8090/rides';
 
 const createRide = async (rideDetails) => {
     console.log('rideDetails:', rideDetails);

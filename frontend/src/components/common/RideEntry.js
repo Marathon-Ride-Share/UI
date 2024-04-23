@@ -11,7 +11,7 @@ const RideEntry = ({ride}) => {
             </div>
             <div className="ride-info-entry">
                 <div className="address-entry">{ride.destination.locationName}</div>
-                <div className="date-time-entry">{formatDate(ride.endTime)}</div>
+                <div className="date-time-entry">{formatDate(ride.startTime)}</div>
                 <div className="price-entry">${ride.price}</div>                
             </div>
             <div className="review-action">Review</div>

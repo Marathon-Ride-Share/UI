@@ -39,13 +39,16 @@ const findRidesNearby = async (searchRequest) => {
 };
 
 const bookRide = async (bookRideRequest) => {
-  console.log("booking ride with " + bookRideRequest);
+  console.log(bookRideRequest);
+  console.log(bookRideRequest.userName);
+  console.log(bookRideRequest.rideId);
+  console.log(bookRideRequest.pickupLocation);
   const response = await fetch(`${RideShareURL}/book`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ bookRideRequest }),
+    body: JSON.stringify(bookRideRequest),
   });
 
   if (!response.ok) {

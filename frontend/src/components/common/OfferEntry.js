@@ -14,6 +14,7 @@ const handleBookRide = async (rideId, location) => {
       rideId,
       location
     );
+    // console.log(bookRideRequest);
     const response = await bookRide(bookRideRequest);
     console.log(response);
   } catch (error) {
@@ -33,7 +34,9 @@ const OfferEntry = ({ ride, location }) => {
         <div className="address-entry">{ride.destination.locationName}</div>
         <div className="price-entry">${ride.price}</div>
       </div>
-        <button onClick={() => handleBookRide(ride.id, location)}>Book</button>
+      <button onClick={() => handleBookRide(ride.rideId, location)}>
+        Book
+      </button>
     </div>
   );
 };

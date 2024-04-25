@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import '../../css/RideCard.css';
 import mapboxgl from "mapbox-gl";
 import { formatDate } from '../../utils/formatDate';
@@ -11,7 +11,17 @@ const RideCard = ({ ride, onReviewClick}) => {
 
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const navigate = useNavigate(); // Using useNavigate instead of useHistory
+    const navigate = useNavigate();
+    const [username, setUsername] = useState('default');
+    const [shouldShowReviewButton, setShouldShowReviewButton] = useState(false);
+
+    useEffect(() => {
+        const savedUsername = localStorage.getItem('username');
+        setUsername(savedUsername);
+        setShouldShowReviewButton(savedUsername !== ride.driverInfo.driverName);
+        console.log("savedUsername", savedUsername);
+        console.log("ride.driverId", ride.driverInfo.driverName);
+    }, [ride.driverId]);
 
 
 
@@ -87,6 +97,7 @@ const RideCard = ({ ride, onReviewClick}) => {
     };
 
 
+
     return (
         <div className="ride-card">
             <div className="map-container">
@@ -97,7 +108,8 @@ const RideCard = ({ ride, onReviewClick}) => {
                 <div className="date-time">{formatDate(ride.startTime)}</div>
                 <div className="price">${ride.price}</div>
             </div>
-            <div className="review-btn" onClick={onReviewClick}>⭐Review</div>
+            {/* Only render the "Review" button if the user is not the driver */}
+            {shouldShowReviewButton && <div className="review-btn" onClick={onReviewClick}>⭐Review</div>}
             <div className="review-btn" onClick={onDetailClick}>Detail</div>
         </div>
     );

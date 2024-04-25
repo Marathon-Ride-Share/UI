@@ -2,13 +2,17 @@ import React, { useEffect, useRef } from 'react';
 import '../../css/RideCard.css';
 import mapboxgl from "mapbox-gl";
 import { formatDate } from '../../utils/formatDate';
+import { useNavigate } from 'react-router-dom';
 
 
-const RideCard = ({ ride, onReviewClick }) => {
+
+const RideCard = ({ ride, onReviewClick}) => {
     mapboxgl.accessToken = 'pk.eyJ1IjoiaGVpZGlpaSIsImEiOiJjbHVpcWY1dGgwNzZpMmpwNW40ZnkydGdhIn0.C24gOW_hYKPR8m8LWXqDsQ';
 
     const mapContainer = useRef(null);
     const map = useRef(null);
+    const navigate = useNavigate(); // Using useNavigate instead of useHistory
+
 
 
     useEffect(() => {
@@ -78,6 +82,11 @@ const RideCard = ({ ride, onReviewClick }) => {
     };
 
 
+    const onDetailClick = () => {
+        navigate(`/ride-detail`, { state: { ride } }); // Navigate with state
+    };
+
+
     return (
         <div className="ride-card">
             <div className="map-container">
@@ -89,6 +98,7 @@ const RideCard = ({ ride, onReviewClick }) => {
                 <div className="price">${ride.price}</div>
             </div>
             <div className="review-btn" onClick={onReviewClick}>⭐Review</div>
+            <div className="review-btn" onClick={onDetailClick}>Detail</div>
         </div>
     );
 };

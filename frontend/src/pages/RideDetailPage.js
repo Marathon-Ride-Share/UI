@@ -1,12 +1,25 @@
 import mapboxgl from "mapbox-gl";
-import {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import {formatDate} from "../utils/formatDate";
+import '../css/RideDetail.css';
+import driverImg from '../images/driver.png';
+import ReviewEntry from "../components/common/ReviewEntry";
+
+
 
 const RideDetail = () => {
 
-    mapboxgl.accessToken = 'pk.eyJ1IjoiaGVpZGlpaSIsImEiOiJjbHVpcWY1dGgwNzZpMmpwNW40ZnkydGdhIn0.C24gOW_hYKPR8m8LWXqDsQ';
-
+    const location = useLocation(); // To access the passed state
+    const [username, setUsername] = useState('default');
+    const ride = location.state.ride; // Accessing the ride object passed as state
     const mapContainer = useRef(null);
     const map = useRef(null);
+    const [reviews, setReviewss] = useState({reviews: []});
+    const navigate = useNavigate(); // Using useNavigate instead of useHistory
+
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoiaGVpZGlpaSIsImEiOiJjbHVpcWY1dGgwNzZpMmpwNW40ZnkydGdhIn0.C24gOW_hYKPR8m8LWXqDsQ';
 
 
     useEffect(() => {
@@ -38,7 +51,6 @@ const RideDetail = () => {
             fetch(directionsRequest)
                 .then(response => response.json())
                 .then(data => {
-                    console.log("他们的 什么东西",data.routes[0].geometry)
                     const route = data.routes[0].geometry;
                     map.current.addSource('route', {
                         type: 'geojson',
@@ -68,23 +80,68 @@ const RideDetail = () => {
         return () => map.current.remove();
     }, [ride]); // 依赖于ride的变化
 
+    useEffect(() => {
+        const savedUsername = localStorage.getItem('username');
+        if (savedUsername) {
+            setUsername(savedUsername);
+            fetchReviews(ride.rideId);
+        }
+    }, []);
+
+
+    const fetchReviews = async (rideId) => {
+        const response = await fetch(`http://localhost:8090/reviews/${rideId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(
+                `HTTP error! status: ${response.status} message: ${response.statusText}`
+            );
+        }
+
+        const res = await response.json();
+        setReviewss(res.data.reviews);
+        console.log("response", res.data.reviews);
+    }
+
+    const onCloseClick = () => {
+        navigate(`/ride-history`); // Navigate with state
+    };
+
 
     return (
-        <div className="ride-detail">
-            <div className="ride-map" ref={mapContainer} />
+        <div className="ride-detail-container">
+            <div className="ride-detail-header">
+                <button onClick={() => {onCloseClick()}}>X
+                </button>
+                <h1>Ride Details</h1>
+            </div>
+            <div className="ride-map" ref={mapContainer}></div>
             <div className="ride-info">
-                <div className="ride-info-entry">
-                    <div className="address-entry">{ride.destination.locationName}</div>
-                    <div className="date-time-entry">{formatDate(ride.endTime)}</div>
-                    <div className="price-entry">${ride.price}</div>
+                <img src={driverImg} alt="Driver" className="driver-img"/>
+                <div className="ride-meta">
+                    <div className="ride-with">Ride with {ride.driverInfo.driverName}</div>
+                    <div className="ride-time">{formatDate(ride.startTime)}</div>
+                    <div className="ride-price">{`$${ride.price}`}</div>
                 </div>
-                <div className="review-action">
-                    <button>Review</button>
-                </div>
+            </div>
+            <div className="ride-address">
+                <span>Origin: {ride.origin.locationName}</span>
+                <span>Destination: {ride.destination.locationName}</span>
+            </div>
+            <div className="review-list">
+                {reviews.length > 0 ? reviews.map((review) => (
+                    <ReviewEntry key={review.reviewId} review={review}/>
+                )) : <p>No reviews available.</p>}
             </div>
         </div>
     );
 
-}
+};
+
 
 export default RideDetail;

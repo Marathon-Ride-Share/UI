@@ -20,6 +20,7 @@ import RideHistoryPage from "./pages/RideHistoryPage"; // Assuming you have some
 import ChatPage from "./pages/ChatPage";
 
 import PickupLocationPage from "./pages/rideShare/PickupLocationPage";
+import RideDetailPage from "./pages/RideDetailPage";
 
 function App() {
   const isAuthenticated = () => {
@@ -41,6 +42,8 @@ function App() {
         <Route path="/ride-history" element={<RideHistoryPage />} />
         <Route path="/pickup" element={<PickupLocationPage />} />
         <Route path="/my-rides" element={<MyRidePage />} />
+        <Route path="/ride-detail" element={<RideDetailPage />} />
+
 
         {/*<Route path="/book-ride" element={<BookRidePage />} />*/}
         {/* Add other routes for other pages as needed */}

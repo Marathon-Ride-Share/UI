@@ -1,0 +1,84 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.ride-entry {
+    width: 90%;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 15px auto;
+    font-family: sans-serif;
+}
+
+.msgHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 2px solid #f2f2f2; /* Add a bottom border to separate header from content */
+}
+
+.citizen_info {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between image and text */
+}
+
+.passengerImg {
+    width: 40px; /* Adjust as needed */
+    height: 40px; /* Maintain aspect ratio */
+    border-radius: 50%;
+}
+
+.msgName {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.msgTime {
+    font-size: 12px;
+    color: #A0A0A0;
+}
+
+.msgContent {
+    font-size: 16px;
+    padding: 10px;
+    border-top: 1px solid #f2f2f2; /* If you want a top border for content */
+}
+
+.citizen_status {
+    font-size: 16px;
+    font-weight: 600;
+    display: block; /* Makes the element a block to start on a new line */
+    margin-top: 5px;
+    text-align: right; /* Aligns the rating to the right */
+}
+
+/* Additional styles to match the visual hierarchy and spacing of image 2 */
+.username {
+    font-size: 14px;
+    color: #333;
+    margin-right: 10px;
+}
+
+.rating {
+    color: #666;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.review-text {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4; /* Adjust line height for better readability */
+}
+
+/* Style for the verified checkmark, if needed */
+.verified-check {
+    color: #4CAF50; /* Green color for the verified icon */
+    margin-left: 5px;
+}

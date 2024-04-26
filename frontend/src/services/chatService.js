@@ -23,13 +23,14 @@ export const createWebSocketConnection = (apiUrl, handleMessageReceived) => {
     };
 
     ws.onclose = event => {
+        console.log(event);
         console.log('Connection closed');
     };
 
     ws.onerror = error => {
         console.log('WebSocket encountered an error:', error);
         console.log('Error details:', error.message);
-        ws.close();
+        // ws.close();
     };
 
     return ws;

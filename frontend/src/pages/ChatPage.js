@@ -14,15 +14,19 @@ function ChatPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (state?.rideId) {
-            setRideId(state.rideId);
-            setChatType('private');
-            setMessages([]); // Clear messages when entering a new private chat room
-        }
-        const wsUrl = `ws://localhost:8083/chat`;
+        console.log("useeffect1");
+        // if (state?.rideId) {
+        //     setChatType('private');
+        //     setMessages([]); // Clear messages when entering a new private chat room
+        // }
+        const wsUrl = `ws://localhost:8083/chat?rideId=${state.rideId}`;
         ws.current = createWebSocketConnection(wsUrl, handleMessageReceived);
-        return () => ws.current?.close();
-    }, [state?.rideId]);
+        console.log('Closing connection for Ride ID: ', state.rideId);
+        // return () => {
+        //     console.log('Closing connection for Ride ID: ', state.rideId);
+        //     ws.current?.close();
+        // };
+    }, []);
 
     const fetchMessages = useCallback(() => {
         if (rideId) {
@@ -43,10 +47,14 @@ function ChatPage() {
     }, [rideId]);
 
     useEffect(() => {
+        console.log("useeffect2");
+
         fetchMessages();
     }, [fetchMessages]);
 
     useEffect(() => {
+        console.log("useeffect3");
+
         setUsername(localStorage.getItem('username') || 'default');
     }, []);
 

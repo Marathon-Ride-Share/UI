@@ -77,7 +77,6 @@ const PickupLocationPage = () => {
 
   useEffect(() => {
     if (!coords) return;
-    if (map.current) return; // Prevent multiple initializations
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
@@ -105,6 +104,7 @@ const PickupLocationPage = () => {
             lng: data.features[0].center[0],
             lat: data.features[0].center[1],
           };
+          console.log("NEW PICKUP")
           setCoords(newCoords);
           setLocationDetails({
             latitude: newCoords.lat,

@@ -78,7 +78,7 @@ const MyRidePage = () => {
       (ride) => ride.status === "CREATED" || ride.status === "IN_PROGRESS"
     );
     const filteredPassengerRides = res.data.passengerRides.filter(
-      (ride) => new Date(ride.startTime) >= now
+      (ride) => ride.status === "CREATED" || ride.status === "IN_PROGRESS"
     );
     console.log(res.data);
     setRides({

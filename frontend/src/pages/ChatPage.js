@@ -22,10 +22,12 @@ function ChatPage() {
         const wsUrl = `ws://localhost:8083/chat?rideId=${state.rideId}`;
         ws.current = createWebSocketConnection(wsUrl, handleMessageReceived);
         console.log('Closing connection for Ride ID: ', state.rideId);
-        // return () => {
-        //     console.log('Closing connection for Ride ID: ', state.rideId);
-        //     ws.current?.close();
-        // };
+        return () => {
+            if (ws.current) {
+                ws.current.close();
+                console.log('Closing connection for Ride ID: ', state.rideId);
+            }
+        };
     }, []);
 
     const fetchMessages = useCallback(() => {
@@ -78,7 +80,9 @@ function ChatPage() {
                 timestamp: timestamp,
                 chatType: chatType
             };
-            setMessages(prevMessages => [...prevMessages, messageToSend]);
+            if (messageToSend.sender !== username) { // Check if the message is not from the current user
+                setMessages(prevMessages => [...prevMessages, messageToSend]);
+            }
             sendMessage(rideId, newMessage, username, chatType).then(() => {
                 console.log("Message sent successfully");
             }).catch(error => {

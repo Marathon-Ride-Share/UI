@@ -22,12 +22,9 @@ export const createWebSocketConnection = (apiUrl, handleMessageReceived) => {
         }
     };
 
-
-
     ws.onclose = event => {
         console.log('Connection closed');
     };
-
 
     ws.onerror = error => {
         console.log('WebSocket encountered an error:', error);
@@ -36,12 +33,4 @@ export const createWebSocketConnection = (apiUrl, handleMessageReceived) => {
     };
 
     return ws;
-};
-
-
-export const sendMessage = (ws, message, recipient) => {
-    if (ws && ws.readyState === WebSocket.OPEN) {
-        const messageData = { message, recipient };
-        ws.send(JSON.stringify(messageData));
-    }
 };

@@ -61,15 +61,24 @@ const CreateRidePage = () => {
                 </Form.Label>
                 <Col sm="8">
                   <DatePicker
-                    selected={startTime}
-                    onChange={(date) => setStartTime(date)}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={15}
-                    timeCaption="time"
-                    dateFormat="MMMM d, yyyy h:mm aa"
-                    wrapperClassName="datePicker"
-                    className="form-control"
+                      selected={startTime}
+                      onChange={(date) => setStartTime(date)}
+                      showTimeSelect
+                      onChange={(date) => setStartTime(date)}
+                      showTimeSelect
+                      timeFormat="HH:mm"
+                      timeIntervals={15}
+                      timeCaption="time"
+                      timeFormat="HH:mm"
+                      dateFormat="MMMM d, yyyy h:mm aa"
+                      wrapperClassName="datePicker"
+                      timeIntervals={15}
+                      timeCaption="time"
+                      className="form-control"
+                      dateFormat="MMMM d, yyyy h:mm aa"
+                      wrapperClassName="datePicker"
+                      className="form-control"
+                      minDate={new Date()} // This line ensures that only future dates can be selected
                   />
                 </Col>
               </Form.Group>

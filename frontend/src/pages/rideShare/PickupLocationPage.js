@@ -177,15 +177,24 @@ const PickupLocationPage = () => {
               </Form.Label>
               <Col sm="8">
                 <DatePicker
-                  selected={pickupTime}
-                  onChange={(date) => setPickupTime(date)}
-                  showTimeSelect
-                  timeFormat="HH:mm"
-                  timeIntervals={15}
-                  timeCaption="time"
-                  dateFormat="MMMM d, yyyy h:mm aa"
-                  wrapperClassName="datePicker"
-                  className="form-control"
+                    selected={pickupTime}
+                    onChange={(date) => setPickupTime(date)}
+                    showTimeSelect
+                    onChange={(date) => setPickupTime(date)}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    timeCaption="time"
+                    timeFormat="HH:mm"
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                    wrapperClassName="datePicker"
+                    timeIntervals={15}
+                    timeCaption="time"
+                    className="form-control"
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                    wrapperClassName="datePicker"
+                    className="form-control"
+                    minDate={new Date()} // This line ensures that only future dates can be selected
                 />
               </Col>
             </Form.Group>

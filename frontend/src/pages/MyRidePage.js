@@ -74,12 +74,16 @@ const MyRidePage = () => {
 
     const res = await response.json();
     const now = new Date();
-    const filteredDriverRides = res.data.driverRides.filter(
-      (ride) => ride.status === "CREATED" || ride.status === "IN_PROGRESS"
-    );
-    const filteredPassengerRides = res.data.passengerRides.filter(
-      (ride) => ride.status === "CREATED" || ride.status === "IN_PROGRESS"
-    );
+    const filteredDriverRides =
+      res.data.driverRides != null &&
+      res.data.driverRides.filter(
+        (ride) => ride.status === "CREATED" || ride.status === "IN_PROGRESS"
+      );
+    const filteredPassengerRides =
+      res.data.passengerRides != null &&
+      res.data.passengerRides.filter(
+        (ride) => ride.status === "CREATED" || ride.status === "IN_PROGRESS"
+      );
     console.log(res.data);
     setRides({
       driverRides: filteredDriverRides,

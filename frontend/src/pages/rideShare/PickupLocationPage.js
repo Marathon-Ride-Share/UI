@@ -9,6 +9,7 @@ import DatePicker from "react-datepicker";
 import { SearchRidesRequest } from "../../models/RideShareModels";
 import { Modal, ListGroup } from "react-bootstrap";
 import OfferEntry from "../../components/common/OfferEntry";
+import RideCard from "../../components/common/RideCard";
 const RidesModal = ({
   showModal,
   setShowModal,
@@ -24,21 +25,27 @@ const RidesModal = ({
       scrollable
     >
       <Modal.Header closeButton>
-        <Modal.Title>Available Rides</Modal.Title>
+        <Modal.Title>Rides Nearby</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="ride-history">
-          <div className="ride-list">
-            {rides.map((ride, index) => (
-              <OfferEntry
-                key={ride.rideId}
-                ride={ride}
-                location={locationDetails}
-                className="ride-entry-card"
-              />
-            ))}
+          <div className='ride-list'>
+            {rides?.length > 0 ?
+                rides.map((ride, index) => (
+                        <OfferEntry
+                            key={ride.rideId}
+                            ride={ride}
+                            location={locationDetails}
+                            className="ride-entry-card"
+                        />
+                    )
+                ) : (
+                    <p>No Rides!</p>
+                )}
           </div>
         </div>
+
+
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={() => setShowModal(false)}>
@@ -50,7 +57,7 @@ const RidesModal = ({
 };
 
 mapboxgl.accessToken =
-  "pk.eyJ1IjoiaGVpZGlpaSIsImEiOiJjbHVpcWY1dGgwNzZpMmpwNW40ZnkydGdhIn0.C24gOW_hYKPR8m8LWXqDsQ";
+    "pk.eyJ1IjoiaGVpZGlpaSIsImEiOiJjbHVpcWY1dGgwNzZpMmpwNW40ZnkydGdhIn0.C24gOW_hYKPR8m8LWXqDsQ";
 
 const PickupLocationPage = () => {
   const [pickupLocation, setPickupLocation] = useState("");

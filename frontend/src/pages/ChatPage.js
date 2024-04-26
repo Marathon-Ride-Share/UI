@@ -8,7 +8,7 @@ function ChatPage() {
     const [newMessage, setNewMessage] = useState('');
     const [username, setUsername] = useState('default');
     const { state } = useLocation();
-    const [rideId, setRideId] = useState(state?.rideId || "12345");
+    const [rideId, setRideId] = useState(state?.rideId || null);
     const [chatType, setChatType] = useState(state?.rideId ? 'private' : 'group');
     const ws = useRef(null);
     const navigate = useNavigate();

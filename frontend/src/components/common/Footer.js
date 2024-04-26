@@ -17,16 +17,13 @@ const Footer = () => {
 
       <div className="footer-item">
       <img src={menuLogo} alt="home" className="footer-icon"  onClick={() => navigate('/ride-history')}/>
-        <div className="footer-text">Services</div>
+        <div className="footer-text">History</div>
       </div>
       <div className="footer-item">
-      <img src={orderLogo} alt="home" className="footer-icon" onClick={() => navigate('/ride-share')}/>
-        <div className="footer-text">Activity</div>
+      <img src={orderLogo} alt="home" className="footer-icon" onClick={() => navigate('/inride-chat')}/>
+        <div className="footer-text">public chat</div>
       </div>
-      <div className="footer-item">
-      <img src={userLogo} alt="home" className="footer-icon" onClick={() => navigate('/user-profile')}/>
-        <div className="footer-text">Account</div>
-      </div>
+
     </div>
   );
 };

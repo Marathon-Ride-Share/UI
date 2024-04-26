@@ -75,13 +75,13 @@ const MyRidePage = () => {
     const res = await response.json();
     const now = new Date();
     const filteredDriverRides =
-      res.data.driverRides != null &&
-      res.data.driverRides.filter(
+      res.data?.driverRides != null &&
+      res.data?.driverRides.filter(
         (ride) => ride.status === "CREATED" || ride.status === "IN_PROGRESS"
       );
     const filteredPassengerRides =
-      res.data.passengerRides != null &&
-      res.data.passengerRides.filter(
+      res.data?.passengerRides != null &&
+      res.data?.passengerRides.filter(
         (ride) => ride.status === "CREATED" || ride.status === "IN_PROGRESS"
       );
     console.log(res.data);
@@ -92,29 +92,35 @@ const MyRidePage = () => {
   };
 
   return (
-    <>
-      <Header />
-      <select
-        value={rideFilter}
-        onChange={(e) => setRideFilter(e.target.value)}
-      >
-        <option value="passenger">Passenger Rides</option>
-        <option value="driver">Driver Rides</option>
-      </select>
-      <div className="ride-list">
-        {rides[rideFilter + "Rides"].map((ride, index) => (
-          <RideCard
-            key={ride.rideId}
-            ride={ride}
-            myRidePage={true}
-            handleStartRide={() => handleStartRide(ride.rideId)}
-            handleCompleteRide={() => handleCompleteRide(ride.rideId)}
-            handleInRideChat={() => handleInRideChat(ride.rideId)}
-          />
-        ))}
-      </div>
-      <Footer />
-    </>
+      <>
+        <Header/>
+        <select
+            value={rideFilter}
+            onChange={(e) => setRideFilter(e.target.value)}
+        >
+          <option value="passenger">Passenger Rides</option>
+          <option value="driver">Driver Rides</option>
+        </select>
+
+        <div className='ride-list'>
+          {rides[rideFilter + 'Rides']?.length > 0 ? (
+              rides[rideFilter + 'Rides'].map((ride, index) => (
+                  <RideCard
+                      key={ride.rideId}
+                      ride={ride}
+                      myRidePage={true}
+                      handleStartRide={() => handleStartRide(ride.rideId)}
+                      handleCompleteRide={() => handleCompleteRide(ride.rideId)}
+                      handleInRideChat={() => handleInRideChat(ride.rideId)}
+                  />
+              ))
+          ) : (
+              <p>No rides available.</p>
+          )}
+        </div>
+
+        <Footer/>
+      </>
   );
 };
 

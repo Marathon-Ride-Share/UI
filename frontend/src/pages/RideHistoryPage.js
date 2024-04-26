@@ -42,8 +42,8 @@ const RideHistory = () => {
 
         const res = await response.json();
         const now = new Date();
-        const filteredDriverRides = res.data.driverRides.filter(ride => new Date(ride.startTime) < now);
-        const filteredPassengerRides = res.data.passengerRides.filter(ride => new Date(ride.startTime) < now);
+        const filteredDriverRides = res?.data?.driverRides.filter(ride => new Date(ride.startTime) < now);
+        const filteredPassengerRides = res?.data?.passengerRides.filter(ride => new Date(ride.startTime) < now);
         setRides({
             driverRides: filteredDriverRides,
             passengerRides: filteredPassengerRides
@@ -98,20 +98,24 @@ const RideHistory = () => {
 
     return (
         <>
-            <Header />
+            <Header/>
             <select value={rideFilter} onChange={e => setRideFilter(e.target.value)}>
                 <option value="passenger">Passenger Rides</option>
                 <option value="driver">Driver Rides</option>
             </select>
             <div className='ride-list'>
-                {rides[rideFilter + 'Rides'].map((ride, index) => (
-                    <RideCard
-                        key={ride.rideId}
-                        ride={ride}
-                        onReviewClick={() => openModal(ride)}
-                        // onDetailClick={() => console.log('Detail ride:', ride.rideId)}
-                    />
-                ))}
+                {rides[rideFilter + 'Rides']?.length > 0 ? (
+                    rides[rideFilter + 'Rides'].map((ride, index) => (
+                        <RideCard
+                            key={ride.rideId}
+                            ride={ride}
+                            onReviewClick={() => openModal(ride)}
+                            // onDetailClick={() => console.log('Detail ride:', ride.rideId)}
+                        />
+                    ))
+                ) : (
+                    <p>No rides available.</p>
+                )}
             </div>
 
             <Modal
@@ -134,12 +138,12 @@ const RideHistory = () => {
                 </label>
                 <label>
                     Comment:
-                    <textarea value={comment} onChange={e => setComment(e.target.value)} />
+                    <textarea value={comment} onChange={e => setComment(e.target.value)}/>
                 </label>
                 <button onClick={handleReviewSubmit}>Submit Review</button>
                 <button onClick={closeModal}>Close</button>
             </Modal>
-            <Footer />
+            <Footer/>
         </>
     );
 };

@@ -48,9 +48,9 @@ const CreateRidePage = () => {
       navigate("/my-rides", { state: { rideDetails: response.ride } });
     } catch (error) {
       // Show an error message to the user
-      alert("Failed to create ride: " + error);
+      // alert("Failed to create ride: " + error);
       console.error("Failed to create ride:", error);
-      setErrorMessage(error.message);
+      setErrorMessage("You can only create rides with drivable routes!");
       setShowErrorModal(true);
     }
   };

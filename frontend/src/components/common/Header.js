@@ -14,17 +14,7 @@ const Header = () => {
                     <img src={carLogo} alt="Car Logo" width="30" height="30" />
                 </a>
                 <Dropdown>
-                    <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                        <BsList /> {/* This uses a list icon from react-icons */}
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => navigate('/ride-share')}>Ride Share</Dropdown.Item>
-                        <Dropdown.Item onClick={() => navigate('/ride-history')}>Ride History</Dropdown.Item>
-                        <Dropdown.Item onClick={() => navigate('/user-profile')}>User Profile</Dropdown.Item>
-                        <Dropdown.Item onClick={() => navigate('/inride-chat')}>InRide Chat</Dropdown.Item>
-                        <Dropdown.Item onClick={() => navigate('/payment-info')}>Payment Info</Dropdown.Item>
-                    </Dropdown.Menu>
+                    <button onClick={()=>{navigate("/")}}>Logout</button>
                 </Dropdown>
             </div>
         </nav>

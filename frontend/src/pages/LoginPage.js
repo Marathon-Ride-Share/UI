@@ -40,7 +40,7 @@ const LoginPage = () => {
             localStorage.setItem('username', data.username);
 
             localStorage.setItem('isDriver', data.isDriver);
-            navigate('/welcome');
+            navigate('/ride-share');
         } catch (e) {
             console.log(e);
         };

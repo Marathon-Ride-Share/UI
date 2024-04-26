@@ -12,7 +12,7 @@ const createRide = async (rideDetails) => {
 
   if (!response.ok) {
     throw new Error(
-      `HTTP error! status: ${response.status} message: ${response.statusText}`
+        `HTTP error! status: ${response.status} message: ${response.statusText}`
     );
   }
 
@@ -31,7 +31,7 @@ const findRidesNearby = async (searchRequest) => {
 
   if (!response.ok) {
     throw new Error(
-      `HTTP error! status: ${response.status} message: ${response.statusText}`
+        `HTTP error! status: ${response.status} message: ${response.statusText}`
     );
   }
 
@@ -53,7 +53,7 @@ const bookRide = async (bookRideRequest) => {
 
   if (!response.ok) {
     throw new Error(
-      `HTTP error! status: ${response.status} message: ${response.statusText}`
+        `HTTP error! status: ${response.status} message: ${response.statusText}`
     );
   }
 
@@ -72,11 +72,30 @@ const startRide = async (rideId, startTime) => {
 
   if (!response.ok) {
     throw new Error(
-      `HTTP error! status: ${response.status} message: ${response.statusText}`
+        `HTTP error! status: ${response.status} message: ${response.statusText}`
     );
   }
 
   return await response.json();
 };
 
-export { createRide, findRidesNearby, startRide, bookRide };
+const completeRide = async (rideId, completeTime) => {
+  console.log("Starting ride with ID:", rideId, "at time:", completeTime);
+  const response = await fetch(`${RideShareURL}/${rideId}/complete`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ completeTime }),
+  });
+
+  if (!response.ok) {
+    throw new Error(
+        `HTTP error! status: ${response.status} message: ${response.statusText}`
+    );
+  }
+
+  return await response.json();
+};
+
+export { createRide, findRidesNearby, startRide, completeRide, bookRide };

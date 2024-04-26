@@ -126,9 +126,9 @@ const PickupLocationPage = () => {
       );
       const response = await findRidesNearby(searchRequest);
 
-      const userId = localStorage.getItem("userId");
+      const username = localStorage.getItem("username");
       const filteredRides = response.rides.filter(
-        (ride) => ride.driverInfo.driverName !== userId
+        (ride) => ride.driverInfo.driverName !== username
       );
       console.log(filteredRides);
       setRides(filteredRides);

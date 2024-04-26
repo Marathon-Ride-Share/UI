@@ -19,7 +19,24 @@ function ChatPage() {
             setChatType('private');
             setMessages([]); // Clear messages when entering a new private chat room
         }
+        const wsUrl = `ws://localhost:8083/chat`;
+        ws.current = createWebSocketConnection(wsUrl, handleMessageReceived);
+        return () => ws.current?.close();
     }, [state?.rideId]);
+
+    // useEffect(() => {
+    //     ws.onmessage = (event) => {
+    //         const message = JSON.parse(event.data);
+    //         console.log(message)
+    //         const formattedMessages = (message => ({
+    //             sender: message.senderId || 'Unknown',
+    //             message: message.message,
+    //             timestamp: new Date(message.timestamp).getTime(),
+    //             chatType: message.chatType
+    //         }));
+    //         setMessages((prevMessages) => [...prevMessages, formattedMessages]);
+    //     };
+    // }, []);
 
     const fetchMessages = useCallback(() => {
         if (rideId) {
@@ -48,18 +65,15 @@ function ChatPage() {
     }, []);
 
     const handleMessageReceived = useCallback((data) => {
-        const actualData = data.message;
         setMessages(prev => [...prev, {
-            ...actualData,
-            sender: actualData.sender || username
+            sender: data.senderId,
+            message: data.message,
+            timestamp: new Date(data.timestamp).getTime(),
+            chatType: data.chatType
         }]);
-    }, [username]);
+    }, []);
 
-    useEffect(() => {
-        const wsUrl = `ws://localhost:8083/chat`;
-        ws.current = createWebSocketConnection(wsUrl, handleMessageReceived);
-        return () => ws.current?.close();
-    }, [handleMessageReceived, rideId, chatType]);
+
 
     const handleSendMessage = () => {
         if (newMessage.trim()) {
@@ -79,6 +93,14 @@ function ChatPage() {
             setNewMessage('');
         }
     };
+
+    // useEffect(() => {
+    //     if (ws.current.readyState === WebSocket.OPEN) {
+    //         ws.current.send(message);
+    //     } else {
+    //         console.error('WebSocket is not open.');
+    //     }
+    // }, [handleSendMessage, rideId, chatType, handleMessageReceived]);
 
     // sendMessage function integrated within ChatPage
     const sendMessage = async (rideId, message, username, chatType) => {
@@ -108,6 +130,12 @@ function ChatPage() {
 
             if (!response.ok) {
                 throw new Error('Failed to send message');
+            }
+
+            if (ws.current.readyState === WebSocket.OPEN) {
+                ws.current.send(message);
+            } else {
+                console.error('WebSocket is not open.');
             }
 
             const responseData = await response.json();

@@ -19,10 +19,7 @@ const Footer = () => {
       <img src={menuLogo} alt="home" className="footer-icon"  onClick={() => navigate('/ride-history')}/>
         <div className="footer-text">History</div>
       </div>
-      <div className="footer-item">
-      <img src={orderLogo} alt="home" className="footer-icon" onClick={() => navigate('/inride-chat')}/>
-        <div className="footer-text">public chat</div>
-      </div>
+
 
     </div>
   );

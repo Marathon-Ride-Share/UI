@@ -30,7 +30,7 @@ const MyRidePage = () => {
       const response = await startRide(rideId, new Date().toISOString);
       console.log(response);
 
-      navigate("/my-rides", { state: { key: Date.now() } });
+      window.location.reload()
     } catch (error) {
       // Show an error message to the user
       alert("Failed to start ride: " + error);

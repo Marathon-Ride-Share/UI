@@ -97,52 +97,58 @@ const RideDetail = () => {
       );
     }
 
-    const res = await response.json();
-    setReviewss(res.data.reviews);
-    console.log("response", res.data.reviews);
-  };
 
-  const onCloseClick = (page) => {
-    navigate(`/ride-history`); // Navigate with state
-  };
+    const onCloseClick = () => {
+        navigate(`/ride-history`); // Navigate with state
+    };
 
-  return (
-    <div className="ride-detail-container">
-      <div className="ride-detail-header">
-        <button
-          onClick={() => {
-            onCloseClick();
-          }}
-        >
-          X
-        </button>
-        <h1>Ride Details</h1>
-      </div>
-      <div className="ride-map" ref={mapContainer}></div>
-      <div className="ride-info">
-        <img src={driverImg} alt="Driver" className="driver-img" />
-        <div className="ride-meta">
-          <div className="ride-with">
-            Ride with {ride.driverInfo.driverName}
-          </div>
-          <div className="ride-time">{formatDate(ride.startTime)}</div>
-          <div className="ride-price">{`$${ride.price}`}</div>
+    const onDelete = async (reviewId,userId) => {
+        const response = await fetch(`http://localhost:8090/reviews/${reviewId}/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(
+                `HTTP error! status: ${response.status} message: ${response.statusText}`
+            );
+        }
+
+        console.log("delete review response", response);
+
+        window.location.reload();
+    };
+
+
+    return (
+        <div className="ride-detail-container">
+            <div className="ride-detail-header">
+                <button onClick={() => {onCloseClick()}}>X
+                </button>
+                <h1>Ride Details</h1>
+            </div>
+            <div className="ride-map" ref={mapContainer}></div>
+            <div className="ride-info">
+                <img src={driverImg} alt="Driver" className="driver-img"/>
+                <div className="ride-meta">
+                    <div className="ride-with">Ride with {ride.driverInfo.driverName}</div>
+                    <div className="ride-time">{formatDate(ride.startTime)}</div>
+                    <div className="ride-price">{`$${ride.price}`}</div>
+                </div>
+            </div>
+            <div className="ride-address">
+                <span>Origin: {ride.origin.locationName}</span>
+                <span>Destination: {ride.destination.locationName}</span>
+            </div>
+            <div className="review-list">
+                {reviews.length > 0 ? reviews.map((review) => (
+                    <ReviewEntry key={review.reviewId} review={review} onDelete={onDelete}/>
+                )) : <p>No reviews available.</p>}
+            </div>
+
         </div>
-      </div>
-      <div className="ride-address">
-        <span>Origin: {ride.origin.locationName}</span>
-        <span>Destination: {ride.destination.locationName}</span>
-      </div>
-      <div className="review-list">
-        {reviews.length > 0 ? (
-          reviews.map((review) => (
-            <ReviewEntry key={review.reviewId} review={review} />
-          ))
-        ) : (
-          <p>No reviews available.</p>
-        )}
-      </div>
-    </div>
   );
 };
 

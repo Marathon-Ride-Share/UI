@@ -79,4 +79,23 @@ const startRide = async (rideId, startTime) => {
   return await response.json();
 };
 
-export { createRide, findRidesNearby, startRide, bookRide };
+const completeRide = async (rideId, completeTime) => {
+  console.log("Starting ride with ID:", rideId, "at time:", completeTime);
+  const response = await fetch(`${RideShareURL}/${rideId}/complete`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ completeTime }),
+  });
+
+  if (!response.ok) {
+    throw new Error(
+        `HTTP error! status: ${response.status} message: ${response.statusText}`
+    );
+  }
+
+  return await response.json();
+};
+
+export { createRide, findRidesNearby, startRide, completeRide, bookRide };

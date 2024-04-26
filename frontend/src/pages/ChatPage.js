@@ -24,20 +24,6 @@ function ChatPage() {
         return () => ws.current?.close();
     }, [state?.rideId]);
 
-    // useEffect(() => {
-    //     ws.onmessage = (event) => {
-    //         const message = JSON.parse(event.data);
-    //         console.log(message)
-    //         const formattedMessages = (message => ({
-    //             sender: message.senderId || 'Unknown',
-    //             message: message.message,
-    //             timestamp: new Date(message.timestamp).getTime(),
-    //             chatType: message.chatType
-    //         }));
-    //         setMessages((prevMessages) => [...prevMessages, formattedMessages]);
-    //     };
-    // }, []);
-
     const fetchMessages = useCallback(() => {
         if (rideId) {
             const url = `http://localhost:8090/chat/${rideId}`;
@@ -94,15 +80,6 @@ function ChatPage() {
         }
     };
 
-    // useEffect(() => {
-    //     if (ws.current.readyState === WebSocket.OPEN) {
-    //         ws.current.send(message);
-    //     } else {
-    //         console.error('WebSocket is not open.');
-    //     }
-    // }, [handleSendMessage, rideId, chatType, handleMessageReceived]);
-
-    // sendMessage function integrated within ChatPage
     const sendMessage = async (rideId, message, username, chatType) => {
         console.log("getting param to send message");
         console.log(rideId);

@@ -32,7 +32,7 @@ const CreateRidePage = () => {
       const response = await createRide(rideDetails);
       console.log(response);
 
-      navigate("/ride-history", { state: { rideDetails: response.ride } });
+      navigate("/my-rides", { state: { rideDetails: response.ride } });
     } catch (error) {
       // Show an error message to the user
       alert("Failed to create ride: " + error);
@@ -61,24 +61,24 @@ const CreateRidePage = () => {
                 </Form.Label>
                 <Col sm="8">
                   <DatePicker
-                      selected={startTime}
-                      onChange={(date) => setStartTime(date)}
-                      showTimeSelect
-                      onChange={(date) => setStartTime(date)}
-                      showTimeSelect
-                      timeFormat="HH:mm"
-                      timeIntervals={15}
-                      timeCaption="time"
-                      timeFormat="HH:mm"
-                      dateFormat="MMMM d, yyyy h:mm aa"
-                      wrapperClassName="datePicker"
-                      timeIntervals={15}
-                      timeCaption="time"
-                      className="form-control"
-                      dateFormat="MMMM d, yyyy h:mm aa"
-                      wrapperClassName="datePicker"
-                      className="form-control"
-                      minDate={new Date()} // This line ensures that only future dates can be selected
+                    selected={startTime}
+                    onChange={(date) => setStartTime(date)}
+                    showTimeSelect
+                    onChange={(date) => setStartTime(date)}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    timeCaption="time"
+                    timeFormat="HH:mm"
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                    wrapperClassName="datePicker"
+                    timeIntervals={15}
+                    timeCaption="time"
+                    className="form-control"
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                    wrapperClassName="datePicker"
+                    className="form-control"
+                    minDate={new Date()} // This line ensures that only future dates can be selected
                   />
                 </Col>
               </Form.Group>

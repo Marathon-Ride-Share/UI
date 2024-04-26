@@ -44,7 +44,6 @@ function App() {
         <Route path="/my-rides" element={<MyRidePage />} />
         <Route path="/ride-detail" element={<RideDetailPage />} />
 
-
         {/*<Route path="/book-ride" element={<BookRidePage />} />*/}
         {/* Add other routes for other pages as needed */}
       </Routes>

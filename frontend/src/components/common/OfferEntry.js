@@ -7,10 +7,8 @@ import { bookRide } from "../../services/rideShareService";
 import { BookRideRequest } from "../../models/RideShareModels";
 import { useNavigate } from "react-router-dom";
 
-
-
 const handleBookRide = async (rideId, location, navigate) => {
-    try {
+  try {
     console.log("booking ride");
     const bookRideRequest = new BookRideRequest(
       localStorage.getItem("username"),
@@ -19,7 +17,7 @@ const handleBookRide = async (rideId, location, navigate) => {
     );
     // console.log(bookRideRequest);
     const response = await bookRide(bookRideRequest);
-    navigate("/my-rides", { state: { ride:response } });
+    navigate("/my-rides", { state: { ride: response } });
   } catch (error) {
     console.error("Failed to fetch rides:", error);
     // Show an error message to the user
@@ -28,7 +26,7 @@ const handleBookRide = async (rideId, location, navigate) => {
 };
 
 const OfferEntry = ({ ride, location }) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <div className="ride-entry">
       <div className="ride-car">

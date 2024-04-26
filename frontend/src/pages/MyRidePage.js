@@ -52,7 +52,7 @@ const MyRidePage = () => {
   };
 
   const handleInRideChat = async (rideId) => {
-    navigate("/chat", { state: { rideId: rideId } });
+    navigate("/inride-chat", { state: { rideId: rideId } });
   };
 
   const fetchRideIds = async (currentUsername) => {

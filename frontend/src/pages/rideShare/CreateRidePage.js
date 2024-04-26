@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { Container, Modal, Form, Button, Row, Col } from "react-bootstrap";
 import Footer from "../../components/common/Footer";
 import Header from "../../components/common/Header";
 import { CreateRideRequest } from "../../models/RideShareModels";
 import { createRide } from "../../services/rideShareService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
+const ErrorModal = ({ showModal, setShowModal, errorMessage }) => {
+  return (
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Error</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{errorMessage}</Modal.Body>
+      </Modal>
+  );
+};
 
 const CreateRidePage = () => {
   const location = useLocation();
@@ -16,6 +27,8 @@ const CreateRidePage = () => {
   const [startTime, setStartTime] = useState(new Date()); // Initialize with the current date
   const [price, setPrice] = useState("");
   const [availableSeats, setAvailableSeats] = useState("");
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleCreateRideSubmit = async () => {
     const rideDetails = new CreateRideRequest(
@@ -37,7 +50,8 @@ const CreateRidePage = () => {
       // Show an error message to the user
       alert("Failed to create ride: " + error);
       console.error("Failed to create ride:", error);
-      //   navigate("/ride-share");
+      setErrorMessage(error.message);
+      setShowErrorModal(true);
     }
   };
 
@@ -45,6 +59,11 @@ const CreateRidePage = () => {
     <div className="d-flex flex-column min-vh-100">
       <Header />
       <Container className="mt-4">
+        <ErrorModal
+            showModal={showErrorModal}
+            setShowModal={setShowErrorModal}
+            errorMessage={errorMessage}
+        />
         <Row className="justify-content-center">
           <Col md={6}>
             <h1 className="text-center mb-3">Create Your Ride</h1>

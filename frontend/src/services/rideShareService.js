@@ -75,6 +75,8 @@ const startRide = async (rideId, startTime) => {
         `HTTP error! status: ${response.status} message: ${response.statusText}`
     );
   }
+
+  return await response.json();
 };
 
 const completeRide = async (rideId, completeTime) => {
@@ -96,4 +98,4 @@ const completeRide = async (rideId, completeTime) => {
   return await response.json();
 };
 
-export { createRide, findRidesNearby, startRide, bookRide, completeRide };
+export { createRide, findRidesNearby, startRide, completeRide, bookRide };

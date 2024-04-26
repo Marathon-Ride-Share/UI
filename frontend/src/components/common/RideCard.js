@@ -6,19 +6,19 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const RideCard = ({ ride, onReviewClick}) => {
+const RideCard = ({ ride, onReviewClick, myRidePage, handleStartRide, handleCompleteRide, handleInRideChat}) => {
     mapboxgl.accessToken = 'pk.eyJ1IjoiaGVpZGlpaSIsImEiOiJjbHVpcWY1dGgwNzZpMmpwNW40ZnkydGdhIn0.C24gOW_hYKPR8m8LWXqDsQ';
 
     const mapContainer = useRef(null);
     const map = useRef(null);
     const navigate = useNavigate();
     const [username, setUsername] = useState('default');
-    const [shouldShowReviewButton, setShouldShowReviewButton] = useState(false);
+    const [isPassenger, setIsPassenger] = useState(false);
 
     useEffect(() => {
         const savedUsername = localStorage.getItem('username');
         setUsername(savedUsername);
-        setShouldShowReviewButton(savedUsername !== ride.driverInfo.driverName);
+        setIsPassenger(savedUsername !== ride.driverInfo.driverName);
         console.log("savedUsername", savedUsername);
         console.log("ride.driverId", ride.driverInfo.driverName);
     }, [ride.driverId]);
@@ -109,10 +109,21 @@ const RideCard = ({ ride, onReviewClick}) => {
                 <div className="price">${ride.price}</div>
             </div>
             {/* Only render the "Review" button if the user is not the driver */}
-            {shouldShowReviewButton && <div className="review-btn" onClick={onReviewClick}>⭐Review</div>}
+            {!myRidePage && isPassenger && <div className="review-btn" onClick={onReviewClick}>⭐Review</div>}
+            {myRidePage && !isPassenger && ride.state === "CREATED" && <div className="start-btn" onClick={handleStartRide}>Start</div>}
+            {myRidePage && !isPassenger && ride.state === "IN_PROGRESS" && <div className="complete-btn" onClick={handleCompleteRide}>Complete</div>}
+            {myRidePage && <div className="chat-btn" onClick={handleInRideChat}>Chat</div>}
             <div className="review-btn" onClick={onDetailClick}>Detail</div>
         </div>
     );
+};
+
+RideCard.defaultProps = {
+    onReviewClick: () => {}, // Default review function that does nothing
+    handleStartRide: () => {}, // Default start ride function that does nothing
+    handleCompleteRide: () => {}, // Default complete ride function that does nothing
+    handleInRideChat: () => {}, // Default chat function that does nothing
+    myRidePage: false, // Default value is false
 };
 
 export default RideCard;

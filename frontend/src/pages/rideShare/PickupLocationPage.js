@@ -135,8 +135,10 @@ const PickupLocationPage = () => {
 
       const username = localStorage.getItem("username");
       const filteredRides = response.rides.filter(
-        (ride) => ride.driverInfo.driverName !== username
+          (ride) => ride.driverInfo.driverName !== username &&
+              !ride.passengers.some(passenger => passenger.passengerName === username)
       );
+
       console.log(filteredRides);
       setRides(filteredRides);
       setShowModal(true);
@@ -230,7 +232,7 @@ const PickupLocationPage = () => {
                 style={{ height: "300px", marginTop: "20px" }}
               />
               <Button
-                className="mt-3"
+                className="m-3"
                 onClick={handleGetRidesNearby}
                 disabled={!coords}
               >
